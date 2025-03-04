@@ -4,6 +4,7 @@ from .serializers import CustomUserSerializer, CustomTokenObtainPairSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+
 User = get_user_model()
 
 class UserListCreateView(generics.ListCreateAPIView):
@@ -29,6 +30,7 @@ class UserListCreateView(generics.ListCreateAPIView):
 
         return super().create(request, *args, **kwargs)
 
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
@@ -42,5 +44,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         response.data['role'] = user.role if user.role else "undefined"
 
         return response
+
+class UserManagementView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAdminUser]  # Solo admin puede modificar/eliminar usuarios
 
 

@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'users',  # Nueva app para autenticación
+    'users',
+    'menu',
 ]
 
 # Configuración de JWT
@@ -66,6 +67,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
@@ -74,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'digitalmenu_db',
         'USER': 'digitalmenu_user',
-        'PASSWORD': 'chondungaga',  # Si dejaste la contraseña vacía
+        'PASSWORD': 'chondungaga',  
         'HOST': 'localhost',
         'PORT': '3306',
     }
