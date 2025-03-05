@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'users',
     'menu',
+    'pedidos',
+    "mesas",
 ]
 
 # Configuración de JWT

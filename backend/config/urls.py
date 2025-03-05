@@ -7,6 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),  # Ahora "users" maneja autenticación
     path('api/menu/', include('menu.urls')),  # Gestión del menú
+    path('api/', include('pedidos.urls')),  # Agregamos pedidos
+    path('api/', include('mesas.urls')),  # Agregamos mesas
+
+
 ]
 
 # Agregar las rutas para archivos estáticos y multimedia
