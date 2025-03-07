@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from .models import Pedido, DetallePedido
 from menu.models import Plato
+from mesas.models import Mesa  # Importamos Mesa
+
 
 class DetallePedidoSerializer(serializers.ModelSerializer):
-    plato_nombre = serializers.ReadOnlyField(source='plato.nombre')  # Muestra el nombre del plato en lugar del ID
-
     class Meta:
         model = DetallePedido
-        fields = ['id', 'pedido', 'plato', 'plato_nombre', 'cantidad']
+        fields = ['plato', 'cantidad']
 
 class PedidoSerializer(serializers.ModelSerializer):
     detalles = DetallePedidoSerializer(many=True, read_only=True)
@@ -18,16 +18,16 @@ class PedidoSerializer(serializers.ModelSerializer):
         fields = ['id', 'mesero', 'mesa', 'estado', 'fecha_creacion', 'detalles']
 
 class PedidoCreateSerializer(serializers.ModelSerializer):
-    detalles = DetallePedidoSerializer(many=True)  # Ahora permitimos agregar detalles en la creación
+    detalles = DetallePedidoSerializer(many=True)
 
     class Meta:
         model = Pedido
         fields = ['mesa', 'detalles']
 
     def create(self, validated_data):
-        detalles_data = validated_data.pop('detalles')
-        pedido = Pedido.objects.create(**validated_data, mesero=self.context['request'].user)
+        detalles_data = validated_data.pop('detalles')  # Extraer los detalles del pedido
+        pedido = Pedido.objects.create(**validated_data)  # Crear el pedido primero
         for detalle_data in detalles_data:
-            DetallePedido.objects.create(pedido=pedido, **detalle_data)
+            DetallePedido.objects.create(pedido=pedido, **detalle_data)  # Asociar los platos al pedido
         return pedido
 

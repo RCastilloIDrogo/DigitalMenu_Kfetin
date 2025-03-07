@@ -48,6 +48,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 class UserManagementView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAdminUser]  # Solo admin puede modificar/eliminar usuarios
+    permission_classes = [permissions.IsAdminUser]
+
+
+
+
 
 

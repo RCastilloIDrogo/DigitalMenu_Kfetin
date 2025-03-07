@@ -51,3 +51,6 @@ class PedidoHistorialView(generics.ListAPIView):
 
     def get_queryset(self):
         return Pedido.objects.filter(estado='listo').order_by('-fecha_creacion')
+    
+
+
