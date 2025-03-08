@@ -44,3 +44,8 @@ class PedidoCreateSerializer(serializers.ModelSerializer):
             DetallePedido.objects.create(pedido=pedido, **detalle_data)  
 
         return pedido
+class PedidoUpdateEstadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pedido
+        fields = ['estado']
+

@@ -2,7 +2,7 @@ from django.db.models import Count
 from django.contrib.auth import get_user_model  # Importamos el modelo User
 from rest_framework import generics, permissions
 from .models import Pedido, DetallePedido
-from .serializers import PedidoSerializer, PedidoCreateSerializer
+from .serializers import PedidoSerializer, PedidoCreateSerializer, PedidoUpdateEstadoSerializer
 from django.db.models import Prefetch  # Añade esta línea
 
 
@@ -17,8 +17,15 @@ class IsMesero(permissions.BasePermission):
 
 # Solo los cocineros pueden actualizar pedidos
 class IsCocinero(permissions.BasePermission):
+    """ Permitir solo a cocineros actualizar pedidos """
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.role == 'cocinero'
+
+class PedidoUpdateEstadoView(generics.UpdateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoUpdateEstadoSerializer
+    permission_classes = [IsCocinero]  # Solo cocineros pueden modificar pedidos
+
 
 # Los meseros pueden crear y listar pedidos
 class PedidoListCreateView(generics.ListCreateAPIView):

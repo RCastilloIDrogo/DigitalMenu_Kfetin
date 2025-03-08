@@ -1,7 +1,9 @@
+# Dentro de la carpeta de tu aplicación de mesas
 from django.urls import path
-from .views import MesaListCreateView, MesaDetailView
+from .views import MesaListView, MesaCreateView, MesaUpdateEstadoView
 
 urlpatterns = [
-    path('mesas/', MesaListCreateView.as_view(), name='mesa-list'),
-    path('mesas/<int:pk>/', MesaDetailView.as_view(), name='mesa-detail'),
+    path('', MesaListView.as_view(), name='mesa-lista'),  # Listar mesas
+    path('crear/', MesaCreateView.as_view(), name='mesa-crear'),  # Crear mesa
+    path('<int:pk>/estado/', MesaUpdateEstadoView.as_view(), name='mesa-estado'),  # Cambiar estado
 ]

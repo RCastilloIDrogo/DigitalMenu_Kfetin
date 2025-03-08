@@ -1,8 +1,13 @@
 from django.db import models
 
 class Mesa(models.Model):
-    numero = models.PositiveIntegerField(unique=True)  # Número único de la mesa
-    capacidad = models.PositiveIntegerField(default=4)  # Capacidad de la mesa
+    ESTADO_MESA = [
+        ('disponible', 'Disponible'),
+        ('ocupada', 'Ocupada'),
+    ]
+
+    numero = models.PositiveIntegerField(unique=True)
+    estado = models.CharField(max_length=20, choices=ESTADO_MESA, default='disponible')
 
     def __str__(self):
-        return f"Mesa {self.numero} (Capacidad: {self.capacidad})"
+        return f"Mesa {self.numero} - {self.estado}"
