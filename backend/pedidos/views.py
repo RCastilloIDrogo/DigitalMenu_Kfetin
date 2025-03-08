@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model  # Importamos el modelo User
 from rest_framework import generics, permissions
 from .models import Pedido, DetallePedido
 from .serializers import PedidoSerializer, PedidoCreateSerializer
+from django.db.models import Prefetch  # Añade esta línea
+
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -20,12 +22,15 @@ class IsCocinero(permissions.BasePermission):
 
 # Los meseros pueden crear y listar pedidos
 class PedidoListCreateView(generics.ListCreateAPIView):
-    queryset = Pedido.objects.all().order_by('-fecha_creacion')
-    serializer_class = PedidoCreateSerializer
-    permission_classes = [IsMesero]  # Solo meseros pueden acceder
+    serializer_class = PedidoSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Asegurar que sólo usuarios autenticados puedan acceder
 
-    def perform_create(self, serializer):
-        serializer.save(mesero=self.request.user)
+    def get_queryset(self):
+        # Asegurarse de que no se devuelvan pedidos duplicados y de pre-cargar los detalles para mejorar el rendimiento
+        return Pedido.objects.prefetch_related(
+            Prefetch('detalles', queryset=DetallePedido.objects.select_related('plato'))
+        ).order_by('-fecha_creacion')
+
 
 # Los cocineros pueden actualizar el estado de un pedido
 class PedidoUpdateView(generics.UpdateAPIView):
@@ -49,7 +54,9 @@ class PedidoListView(generics.ListAPIView):
             return Pedido.objects.filter(mesero=user).order_by('-fecha_creacion')
         elif user.role == 'cocinero':
             return Pedido.objects.filter(estado__in=['pendiente', 'en_preparacion']).order_by('-fecha_creacion')
-        return Pedido.objects.none()
+        return Pedido.objects.all().order_by('-fecha_creacion')
+
+
 
 class PedidoHistorialView(generics.ListAPIView):
     serializer_class = PedidoSerializer
