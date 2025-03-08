@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Menú Digital</h2>
+
+  <div class="platos">
+    <div *ngFor="let plato of platos" class="plato-card">
+      <h3>{{ plato.nombre }}</h3>
+      <p><strong>Precio Personal:</strong> S/ {{ plato.precio_personal }}</p>
+      <p *ngIf="plato.precio_mediana">
+        <strong>Precio Mediana:</strong> S/ {{ plato.precio_mediana }}
+      </p>
+      <p *ngIf="plato.precio_grande">
+        <strong>Precio Grande:</strong> S/ {{ plato.precio_grande }}
+      </p>
+      <button (click)="agregarAlCarrito(plato)">Agregar</button>
+    </div>
+  </div>
+
+  <div class="carrito">
+    <h2>Carrito</h2>
+    <div *ngFor="let item of carrito">
+      <p>{{ item.nombre }} ({{ item.cantidad }})</p>
+      <button (click)="eliminarDelCarrito(item)">Eliminar</button>
+    </div>
+  </div>
+</div>

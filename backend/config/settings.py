@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'menu',
     'pedidos',
     "mesas",
+    "corsheaders",
+    
 ]
 
 # Configuración de JWT
@@ -38,6 +40,8 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+CORS_ALLOW_ALL_ORIGINS = True  # Permitir todas las conexiones
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +51,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',  # Middleware de CORS
+
 ]
 
 ROOT_URLCONF = 'config.urls'

@@ -1,4 +1,3 @@
-# Dentro de la carpeta de tu aplicación de mesas
 from django.urls import path
 from .views import MesaListView, MesaCreateView, MesaUpdateEstadoView
 
