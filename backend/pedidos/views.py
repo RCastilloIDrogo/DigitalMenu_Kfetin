@@ -1,6 +1,12 @@
+from django.db.models import Count
+from django.contrib.auth import get_user_model  # Importamos el modelo User
 from rest_framework import generics, permissions
 from .models import Pedido, DetallePedido
 from .serializers import PedidoSerializer, PedidoCreateSerializer
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 # Solo los meseros pueden crear pedidos
 class IsMesero(permissions.BasePermission):
@@ -51,6 +57,22 @@ class PedidoHistorialView(generics.ListAPIView):
 
     def get_queryset(self):
         return Pedido.objects.filter(estado='listo').order_by('-fecha_creacion')
+    
+class ClientePedidoCreateView(generics.CreateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoCreateSerializer
+    permission_classes = [permissions.AllowAny]  # Permitir a cualquier usuario hacer pedidos
+
+    def perform_create(self, serializer):
+        # Buscar un mesero disponible (puede ser el que tenga menos pedidos asignados)
+        mesero_disponible = User.objects.filter(role="mesero").annotate(
+            num_pedidos=Count('pedidos')
+        ).order_by('num_pedidos').first()  # Mesero con menos pedidos asignados
+
+        if mesero_disponible:
+            serializer.save(mesero=mesero_disponible)  # Asignar el mesero disponible
+        else:
+            serializer.save(mesero=None)  # Si no hay meseros, se deja vacío (caso poco probable)
     
 
 
