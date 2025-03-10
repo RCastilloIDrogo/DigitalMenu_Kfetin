@@ -1,0 +1,7 @@
+<h2>Selecciona tu mesa</h2>
+
+<ul>
+  <li *ngFor="let mesa of mesas">
+    <button (click)="seleccionarMesa(mesa.id)">Mesa {{ mesa.numero }}</button>
+  </li>
+</ul>

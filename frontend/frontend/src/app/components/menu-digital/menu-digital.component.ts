@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { NgFor, NgIf } from '@angular/common';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-menu-digital',
@@ -12,13 +14,24 @@ import { NgFor, NgIf } from '@angular/common';
 export class MenuDigitalComponent implements OnInit {
   platos: any[] = [];
   carrito: any[] = [];
+  errorMessage: string = ''; // 🔹 Para mostrar errores en la UI
 
   constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.menuService.getPlatos().subscribe((data) => {
-      this.platos = data;
-    });
+    this.menuService
+      .getPlatos()
+      .pipe(
+        catchError((error) => {
+          console.error('Error al obtener los platos:', error);
+          this.errorMessage =
+            'No se pudieron cargar los platos. Inténtalo más tarde.';
+          return of([]); // Devolvemos un array vacío para evitar que la app se rompa
+        })
+      )
+      .subscribe((data) => {
+        this.platos = data;
+      });
   }
 
   agregarAlCarrito(plato: any): void {
