@@ -1,25 +1,41 @@
-<div class="container">
-  <h2>Menú Digital</h2>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Menú Digital - Mesa {{ mesaId }}</h2>
 
-  <div class="platos">
-    <div *ngFor="let plato of platos" class="plato-card">
-      <h3>{{ plato.nombre }}</h3>
-      <p><strong>Precio Personal:</strong> S/ {{ plato.precio_personal }}</p>
-      <p *ngIf="plato.precio_mediana">
-        <strong>Precio Mediana:</strong> S/ {{ plato.precio_mediana }}
-      </p>
-      <p *ngIf="plato.precio_grande">
-        <strong>Precio Grande:</strong> S/ {{ plato.precio_grande }}
-      </p>
-      <button (click)="agregarAlCarrito(plato)">Agregar</button>
-    </div>
-  </div>
+  <div class="row">
+    <div *ngFor="let plato of platos" class="col-md-4 mb-4">
+      <div class="card shadow-lg">
+        <!-- Imagen del Plato -->
+        <img
+          *ngIf="plato.imagen"
+          [src]="plato.imagen"
+          class="card-img-top"
+          alt="{{ plato.nombre }}"
+        />
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ plato.nombre }}</h5>
 
-  <div class="carrito">
-    <h2>Carrito</h2>
-    <div *ngFor="let item of carrito">
-      <p>{{ item.nombre }} ({{ item.cantidad }})</p>
-      <button (click)="eliminarDelCarrito(item)">Eliminar</button>
+          <!-- Precios -->
+          <ul class="list-group list-group-flush">
+            <li *ngIf="plato.precio_personal" class="list-group-item">
+              <strong>Personal:</strong> S/ {{ plato.precio_personal }}
+            </li>
+            <li *ngIf="plato.precio_mediana" class="list-group-item">
+              <strong>Mediana:</strong> S/ {{ plato.precio_mediana }}
+            </li>
+            <li *ngIf="plato.precio_grande" class="list-group-item">
+              <strong>Grande:</strong> S/ {{ plato.precio_grande }}
+            </li>
+          </ul>
+
+          <!-- Botón Agregar -->
+          <button
+            class="btn btn-success mt-3 w-100"
+            (click)="agregarAlCarrito(plato)"
+          >
+            Agregar al Carrito
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,7 +1,38 @@
-<h2>Selecciona tu mesa</h2>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Selecciona tu mesa</h2>
 
-<ul>
-  <li *ngFor="let mesa of mesas">
-    <button (click)="seleccionarMesa(mesa.id)">Mesa {{ mesa.numero }}</button>
-  </li>
-</ul>
+  <div class="row">
+    <div *ngFor="let mesa of mesas" class="col-md-3 mb-4">
+      <div class="card shadow-lg text-center">
+        <div class="card-body">
+          <!-- Icono de la mesa -->
+          <i class="bi bi-table text-primary display-6"></i>
+
+          <h5 class="card-title mt-2">Mesa {{ mesa.numero }}</h5>
+          <p
+            class="card-text"
+            [ngClass]="
+              mesa.estado === 'disponible' ? 'text-success' : 'text-danger'
+            "
+          >
+            {{ mesa.estado.charAt(0).toUpperCase() + mesa.estado.slice(1) }}
+          </p>
+
+          <!-- Botón de selección -->
+          <button
+            class="btn w-100"
+            [ngClass]="
+              mesa.estado === 'disponible'
+                ? 'btn-outline-success'
+                : 'btn-outline-secondary disabled'
+            "
+            (click)="seleccionarMesa(mesa.id)"
+            [disabled]="mesa.estado !== 'disponible'"
+          >
+            Seleccionar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

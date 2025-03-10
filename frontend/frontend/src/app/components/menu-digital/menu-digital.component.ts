@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { ActivatedRoute } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -12,13 +13,22 @@ import { of } from 'rxjs';
   styleUrls: ['./menu-digital.component.css'],
 })
 export class MenuDigitalComponent implements OnInit {
+  mesaId: number | null = null;
   platos: any[] = [];
   carrito: any[] = [];
-  errorMessage: string = ''; // 🔹 Para mostrar errores en la UI
+  errorMessage: string = ''; // Para mostrar errores en la UI
 
-  constructor(private menuService: MenuService) {}
+  constructor(
+    private menuService: MenuService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    // Obtener el ID de la mesa desde la URL
+    this.mesaId = Number(this.route.snapshot.paramMap.get('id'));
+    console.log('Mesa seleccionada:', this.mesaId);
+
+    // Cargar los platos desde el servicio
     this.menuService
       .getPlatos()
       .pipe(
@@ -32,6 +42,12 @@ export class MenuDigitalComponent implements OnInit {
       .subscribe((data) => {
         this.platos = data;
       });
+
+    // Recuperar carrito del localStorage si existe
+    const carritoGuardado = localStorage.getItem('carrito');
+    if (carritoGuardado) {
+      this.carrito = JSON.parse(carritoGuardado);
+    }
   }
 
   agregarAlCarrito(plato: any): void {
@@ -41,9 +57,15 @@ export class MenuDigitalComponent implements OnInit {
     } else {
       this.carrito.push({ ...plato, cantidad: 1 });
     }
+    this.guardarCarrito();
   }
 
   eliminarDelCarrito(plato: any): void {
     this.carrito = this.carrito.filter((p) => p.id !== plato.id);
+    this.guardarCarrito();
+  }
+
+  guardarCarrito(): void {
+    localStorage.setItem('carrito', JSON.stringify(this.carrito));
   }
 }

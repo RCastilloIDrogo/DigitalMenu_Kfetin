@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import { MenuDigitalComponent } from './components/menu-digital/menu-digital.component';
 import { SeleccionMesaComponent } from './components/seleccion-mesa/seleccion-mesa.component';
+import { MenuDigitalComponent } from './components/menu-digital/menu-digital.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'menu', pathMatch: 'full' }, // Redirige a /menu por defecto
-  { path: 'menu', component: MenuDigitalComponent }, // Ruta para el menú digital
-  { path: 'seleccion-mesa', component: SeleccionMesaComponent }, // Ruta para el menú digital
-  { path: '**', redirectTo: 'menu' }, // Cualquier ruta desconocida redirige al menú
+  { path: '', redirectTo: 'seleccion-mesa', pathMatch: 'full' }, // Página de inicio
+  { path: 'seleccion-mesa', component: SeleccionMesaComponent },
+  { path: 'menu/:id', component: MenuDigitalComponent }, // Se añade ':id' para pasar la mesa seleccionada
 ];
