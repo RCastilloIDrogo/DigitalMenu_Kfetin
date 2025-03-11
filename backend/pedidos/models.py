@@ -21,8 +21,16 @@ class Pedido(models.Model):
         return f"Pedido {self.id} - {self.mesa} - {self.estado}"
 
 class DetallePedido(models.Model):
+
+    TAMANO_CHOICES = [
+        ('personal', 'Personal'),
+        ('mediana', 'Mediana'),
+        ('grande', 'Grande'),
+    ]
+        
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
     plato = models.ForeignKey(Plato, on_delete=models.CASCADE)
+    tamano = models.CharField(max_length=10, choices=TAMANO_CHOICES, default='personal')  # 🔹 Agregamos el tamaño
     cantidad = models.PositiveIntegerField()
 
     def __str__(self):

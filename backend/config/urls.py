@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),  # Prefijo claro para "users"
+    path('api/auth/', include('users.urls')),  # ✅ Esto debe estar presente
     path('api/menu/', include('menu.urls')),  # Prefijo claro y ya correcto para "menu"
     path('api/pedidos/', include('pedidos.urls')),  # Prefijo claro para "pedidos"
     path('api/mesas/', include('mesas.urls')),  # Prefijo claro para "mesas"

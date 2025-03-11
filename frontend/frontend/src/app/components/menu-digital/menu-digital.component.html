@@ -18,24 +18,69 @@
           <ul class="list-group list-group-flush">
             <li *ngIf="plato.precio_personal" class="list-group-item">
               <strong>Personal:</strong> S/ {{ plato.precio_personal }}
+              <button
+                class="btn btn-success btn-sm float-end"
+                (click)="agregarAlCarrito(plato, 'personal')"
+              >
+                Agregar
+              </button>
             </li>
             <li *ngIf="plato.precio_mediana" class="list-group-item">
               <strong>Mediana:</strong> S/ {{ plato.precio_mediana }}
+              <button
+                class="btn btn-success btn-sm float-end"
+                (click)="agregarAlCarrito(plato, 'mediana')"
+              >
+                Agregar
+              </button>
             </li>
             <li *ngIf="plato.precio_grande" class="list-group-item">
               <strong>Grande:</strong> S/ {{ plato.precio_grande }}
+              <button
+                class="btn btn-success btn-sm float-end"
+                (click)="agregarAlCarrito(plato, 'grande')"
+              >
+                Agregar
+              </button>
             </li>
           </ul>
-
-          <!-- Botón Agregar -->
-          <button
-            class="btn btn-success mt-3 w-100"
-            (click)="agregarAlCarrito(plato)"
-          >
-            Agregar al Carrito
-          </button>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Carrito de Compras -->
+  <div class="mt-5">
+    <h3>Carrito de Compras</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Plato</th>
+          <th>Tamaño</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of carrito">
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.tamano }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>S/ {{ item.precio * item.cantidad }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="eliminarDelCarrito(item)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary mt-3" (click)="confirmarPedido()">
+      Confirmar Pedido
+    </button>
   </div>
 </div>
