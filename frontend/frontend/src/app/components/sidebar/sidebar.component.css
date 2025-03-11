@@ -1,0 +1,39 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #343a40; /* Color de fondo oscuro */
+  color: white;
+  padding: 20px;
+  transition: width 0.3s;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.nav-link {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: #495057; /* Cambio de color al pasar el mouse */
+  text-decoration: none;
+}
+
+.btn {
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #dc3545; /* Rojo más oscuro al pasar el mouse */
+}

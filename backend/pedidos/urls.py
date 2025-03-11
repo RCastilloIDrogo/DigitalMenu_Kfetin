@@ -5,7 +5,7 @@ from .views import (
     PedidoDetailView,
     PedidoHistorialView,
     ClientePedidoCreateView,
-    PedidoUpdateEstadoView
+    PedidoUpdateEstadoView,
 )
 
 urlpatterns = [
@@ -16,3 +16,4 @@ urlpatterns = [
     path('cliente/', ClientePedidoCreateView.as_view(), name='cliente-pedido-create'),  # ✅ /api/pedidos/cliente/
     path('<int:pk>/estado/', PedidoUpdateEstadoView.as_view(), name='pedido-estado'),
 ]
+

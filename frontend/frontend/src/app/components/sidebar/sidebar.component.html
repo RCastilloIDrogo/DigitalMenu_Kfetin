@@ -1,0 +1,42 @@
+<div class="sidebar bg-dark text-light p-4">
+  <h2 class="text-center mb-4">LukAdmin</h2>
+
+  <nav class="nav flex-column">
+    <div *ngIf="role === 'admin'">
+      <a routerLink="/admin/usuarios" class="nav-link text-light">
+        <i class="fas fa-users me-2"></i> Gestión de Usuarios
+      </a>
+      <a routerLink="/admin/mesas" class="nav-link text-light">
+        <i class="fas fa-chair me-2"></i> Gestión de Mesas
+      </a>
+      <a routerLink="/admin/menu" class="nav-link text-light">
+        <i class="fas fa-utensils me-2"></i> Gestión del Menú
+      </a>
+      <a routerLink="/admin/reportes" class="nav-link text-light">
+        <i class="fas fa-chart-line me-2"></i> Reportes
+      </a>
+    </div>
+
+    <div *ngIf="role === 'mesero'">
+      <a routerLink="/mesero/pedidos" class="nav-link text-light">
+        <i class="fas fa-concierge-bell me-2"></i> Pedidos
+      </a>
+      <a routerLink="/mesero/estado-pedidos" class="nav-link text-light">
+        <i class="fas fa-list-alt me-2"></i> Estado de Pedidos
+      </a>
+    </div>
+
+    <div *ngIf="role === 'cocinero'">
+      <a routerLink="/cocinero/pedidos" class="nav-link text-light">
+        <i class="fas fa-fire me-2"></i> Pedidos en Preparación
+      </a>
+      <a routerLink="/cocinero/listos" class="nav-link text-light">
+        <i class="fas fa-check-circle me-2"></i> Pedidos Listos
+      </a>
+    </div>
+  </nav>
+
+  <button class="btn btn-danger w-100 mt-4" (click)="logout()">
+    <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+  </button>
+</div>
