@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from .models import Mesa
 from .serializers import MesaSerializer
 
@@ -18,6 +18,11 @@ class MesaCreateView(generics.CreateAPIView):
     queryset = Mesa.objects.all()
     serializer_class = MesaSerializer
     permission_classes = [IsAdmin]  # Solo admin puede crear mesas
+
+    def create(self, request, *args, **kwargs):
+        print("Datos recibidos:", request.data)  # 🔍 Verificar datos en consola
+        return super().create(request, *args, **kwargs)
+
 
 # Vista para actualizar el estado de una mesa (ocupada/disponible)
 class MesaUpdateEstadoView(generics.UpdateAPIView):

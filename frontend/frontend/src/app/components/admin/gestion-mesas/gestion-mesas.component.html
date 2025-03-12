@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Gestión de Mesas</h2>
+
+  <!-- Mensajes de error -->
+  <div *ngIf="mensajeError" class="alert alert-danger">
+    {{ mensajeError }}
+  </div>
+
+  <!-- Formulario para agregar nueva mesa -->
+  <form (ngSubmit)="agregarMesa()" class="mb-4">
+    <div class="input-group">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Número de Mesa"
+        [(ngModel)]="nuevaMesa.numero"
+        name="numero"
+        required
+      />
+      <button type="submit" class="btn btn-success">Agregar Mesa</button>
+    </div>
+  </form>
+
+  <!-- Tabla de mesas -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mesa of mesas">
+        <td>{{ mesa.numero }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="
+              mesa.estado === 'disponible' ? 'bg-success' : 'bg-warning'
+            "
+          >
+            {{ mesa.estado }}
+          </span>
+        </td>
+        <td>
+          <button
+            class="btn btn-primary btn-sm me-2"
+            (click)="cambiarEstadoMesa(mesa.id, mesa.estado)"
+          >
+            Cambiar Estado
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarMesa(mesa.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
