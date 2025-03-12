@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MesaService } from '../../services/mesa.service';
+import { MesaService } from '../../services/rest/mesa.service';
 import { Router } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { catchError } from 'rxjs/operators';

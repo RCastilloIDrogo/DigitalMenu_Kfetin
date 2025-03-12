@@ -10,7 +10,7 @@ User = get_user_model()
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAdminUser]  # Solo el Admin puede acceder
+    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]  # Solo el Admin puede acceder
 
     def create(self, request, *args, **kwargs):
         # Verificar si el usuario que hace la petición es un administrador

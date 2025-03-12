@@ -1,0 +1,119 @@
+<div class="container">
+  <h2 class="mb-4">Gestión de Usuarios</h2>
+
+  <!-- 🔹 Lista de Usuarios -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.role }}</td>
+        <td>
+          <button
+            class="btn btn-warning btn-sm"
+            (click)="seleccionarUsuario(usuario)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="eliminarUsuario(usuario.id)"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 🔹 Formulario para Agregar Usuario -->
+  <h3 class="mt-4">Agregar Usuario</h3>
+  <form (ngSubmit)="agregarUsuario()">
+    <div class="mb-3">
+      <label>Usuario</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="nuevoUsuario.username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input
+        type="email"
+        class="form-control"
+        [(ngModel)]="nuevoUsuario.email"
+        name="email"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label>Rol</label>
+      <select
+        class="form-control"
+        [(ngModel)]="nuevoUsuario.role"
+        name="role"
+        required
+      >
+        <option value="mesero">Mesero</option>
+        <option value="cocinero">Cocinero</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Agregar</button>
+  </form>
+
+  <!-- 🔹 Formulario para Editar Usuario -->
+  <div *ngIf="usuarioEditando">
+    <h3 class="mt-4">Editar Usuario</h3>
+    <form (ngSubmit)="editarUsuario()">
+      <div class="mb-3">
+        <label>Usuario</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="usuarioEditando.username"
+          name="editUsername"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="usuarioEditando.email"
+          name="editEmail"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label>Rol</label>
+        <select
+          class="form-control"
+          [(ngModel)]="usuarioEditando.role"
+          name="editRole"
+          required
+        >
+          <option value="mesero">Mesero</option>
+          <option value="cocinero">Cocinero</option>
+        </select>
+      </div>
+      <button class="btn btn-success" type="submit">Guardar Cambios</button>
+      <button class="btn btn-secondary" (click)="usuarioEditando = null">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

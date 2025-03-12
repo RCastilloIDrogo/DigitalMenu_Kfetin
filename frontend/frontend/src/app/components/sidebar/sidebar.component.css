@@ -4,9 +4,10 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: #343a40; /* Color de fondo oscuro */
+  background-color: #343a40;
   color: white;
   padding: 20px;
+  overflow-y: auto; /* Permite hacer scroll si el contenido es largo */
   transition: width 0.3s;
 }
 
