@@ -1,0 +1,86 @@
+<div class="container mt-4">
+  <h2>Gestión del Menú</h2>
+
+  <div *ngIf="mensajeError" class="alert alert-danger">
+    {{ mensajeError }}
+  </div>
+
+  <h3>Platos Disponibles</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio Personal</th>
+        <th>Precio Mediana</th>
+        <th>Precio Grande</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plato of platos">
+        <td>{{ plato.nombre }}</td>
+        <td>{{ plato.categoria }}</td>
+        <td>{{ plato.precio_personal }}</td>
+        <td>{{ plato.precio_mediana }}</td>
+        <td>{{ plato.precio_grande }}</td>
+        <td>
+          <button (click)="seleccionarPlato(plato)" class="btn btn-warning">
+            Editar
+          </button>
+          <button (click)="eliminarPlato(plato.id)" class="btn btn-danger">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>{{ platoEditando ? "Editar Plato" : "Agregar Plato" }}</h3>
+  <form (ngSubmit)="platoEditando ? editarPlato() : agregarPlato()">
+    <input
+      type="text"
+      [(ngModel)]="platoFormulario.nombre"
+      name="nombre"
+      placeholder="Nombre"
+      required
+      class="form-control mb-2"
+    />
+    <input
+      type="text"
+      [(ngModel)]="platoFormulario.categoria"
+      name="categoria"
+      placeholder="Categoría"
+      required
+      class="form-control mb-2"
+    />
+    <input
+      type="number"
+      [(ngModel)]="platoFormulario.precio_personal"
+      name="precio_personal"
+      placeholder="Precio Personal"
+      required
+      class="form-control mb-2"
+    />
+    <input
+      type="number"
+      [(ngModel)]="platoFormulario.precio_mediana"
+      name="precio_mediana"
+      placeholder="Precio Mediana"
+      required
+      class="form-control mb-2"
+    />
+    <input
+      type="number"
+      [(ngModel)]="platoFormulario.precio_grande"
+      name="precio_grande"
+      placeholder="Precio Grande"
+      required
+      class="form-control mb-2"
+    />
+
+    <button type="submit" class="btn btn-primary">
+      {{ platoEditando ? "Actualizar" : "Agregar" }}
+    </button>
+  </form>
+</div>

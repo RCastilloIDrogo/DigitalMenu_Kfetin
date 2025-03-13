@@ -20,7 +20,7 @@ class MesaCreateView(generics.CreateAPIView):
     permission_classes = [IsAdmin]  # Solo admin puede crear mesas
 
     def create(self, request, *args, **kwargs):
-        print("Datos recibidos:", request.data)  # 🔍 Verificar datos en consola
+        print("Datos recibidos:", request.data)
         return super().create(request, *args, **kwargs)
 
 
@@ -28,4 +28,4 @@ class MesaCreateView(generics.CreateAPIView):
 class MesaUpdateEstadoView(generics.UpdateAPIView):
     queryset = Mesa.objects.all()
     serializer_class = MesaSerializer
-    permission_classes = [IsAdmin]  # Solo admin puede modificar el estado
+    permission_classes = [IsAdmin]
