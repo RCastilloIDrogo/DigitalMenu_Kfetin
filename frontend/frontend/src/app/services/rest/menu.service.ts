@@ -56,4 +56,10 @@ export class MenuService {
       headers: this.getHeaders(),
     });
   }
+
+  getCategorias(): Observable<any[]> {
+    return this.http.get<any[]>('http://127.0.0.1:8000/api/menu/categorias/', {
+      headers: this.getHeaders(),
+    });
+  }
 }

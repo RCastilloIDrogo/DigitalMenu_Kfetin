@@ -46,14 +46,18 @@
       required
       class="form-control mb-2"
     />
-    <input
-      type="text"
+
+    <select
       [(ngModel)]="platoFormulario.categoria"
       name="categoria"
-      placeholder="Categoría"
       required
       class="form-control mb-2"
-    />
+    >
+      <option *ngFor="let categoria of categorias" [value]="categoria.id">
+        {{ categoria.nombre }}
+      </option>
+    </select>
+
     <input
       type="number"
       [(ngModel)]="platoFormulario.precio_personal"

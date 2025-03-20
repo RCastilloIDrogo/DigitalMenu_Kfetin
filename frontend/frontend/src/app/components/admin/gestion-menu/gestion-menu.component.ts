@@ -26,12 +26,20 @@ export class GestionMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPlatos();
+    this.cargarCategorias();
   }
 
   cargarPlatos(): void {
     this.menuService.getPlatos().subscribe(
       (data) => (this.platos = data),
       (error) => (this.mensajeError = 'Error al cargar los platos.')
+    );
+  }
+
+  cargarCategorias(): void {
+    this.menuService.getCategorias().subscribe(
+      (data) => (this.categorias = data),
+      (error) => (this.mensajeError = 'Error al cargar categorías.')
     );
   }
 
